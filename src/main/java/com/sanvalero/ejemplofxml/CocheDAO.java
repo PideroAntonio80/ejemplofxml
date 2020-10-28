@@ -126,14 +126,17 @@ public class CocheDAO {
 
             while(resultado.next()) {
                 Coche coche = new Coche(
-                        resultado.getInt(0),
-                        resultado.getString(1),
+                        //resultado.getInt(1),
                         resultado.getString(2),
                         resultado.getString(3),
-                        resultado.getString(4)
+                        resultado.getString(4),
+                        resultado.getString(5)
                 );
                 lista.add(coche);
-
+                /*System.out.print(resultado.getString(2) + " - ");
+                System.out.print(resultado.getString(3) + " - ");
+                System.out.print(resultado.getString(4) + " - ");
+                System.out.println(resultado.getString(5) + " - ");*/
             }
 
             return lista;

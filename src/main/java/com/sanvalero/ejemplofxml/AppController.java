@@ -23,7 +23,7 @@ public class AppController implements Initializable {
     public ComboBox<String> cbTipo;
 
     public TableView<Coche> tvCoches;
-    public TableColumn<Coche, Integer> tcId;
+    //public TableColumn<Coche, Integer> tcId; ???
     public TableColumn<Coche, String> tcMatricula;
     public TableColumn<Coche, String> tcMarca;
     public TableColumn<Coche, String> tcModelo;
@@ -41,6 +41,16 @@ public class AppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> list = FXCollections.observableArrayList("Turismo", "Monovolumen", "4x4", "Furgoneta");
         cbTipo.setItems(list);
+
+        listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
+        cocheDAO.listarCoches();
+        tvCoches.setItems(listaCoches);
+
+        //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
+        tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
+        tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
+        tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
+        tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
     }
 
     /*@FXML
@@ -95,7 +105,7 @@ public class AppController implements Initializable {
         cocheDAO.guardarCoche(coche);
     }
 
-    @FXML
+   /* @FXML
     public void listarCoches() {
 
         listaCoches = FXCollections.observableArrayList();
@@ -107,7 +117,7 @@ public class AppController implements Initializable {
         tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
         tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
-    }
+    }*/
 
 
 }
