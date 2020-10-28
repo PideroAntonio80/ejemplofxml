@@ -132,7 +132,7 @@ public class CocheDAO {
                         resultado.getString(3),
                         resultado.getString(4)
                 );
-                lista.add(coch
+                lista.add(coche);
 
             }
 
