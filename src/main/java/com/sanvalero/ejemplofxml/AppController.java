@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -30,11 +27,18 @@ public class AppController implements Initializable {
     public TableColumn<Coche, String> tcTipo;
     ObservableList<Coche> listaCoches;
 
+    public MenuItem mfQuit;
+
     private CocheDAO cocheDAO;
 
     public AppController() {
         cocheDAO = new CocheDAO();
         cocheDAO.conectar();
+    }
+
+    @FXML
+    public void desconectar() {
+        cocheDAO.desconectar();
     }
 
     @Override

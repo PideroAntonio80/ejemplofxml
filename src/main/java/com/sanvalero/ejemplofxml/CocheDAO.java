@@ -50,7 +50,13 @@ public class CocheDAO {
     }
 
     public void desconectar() {
+        try {
+            conexion.close();
+            conexion = null;
 
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
     }
 
     public void guardarCoche(Coche coche) {
