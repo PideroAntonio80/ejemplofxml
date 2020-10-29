@@ -47,7 +47,7 @@ public class AppController implements Initializable {
         cbTipo.setItems(list);
 
         listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
-        cocheDAO.listarCoches();
+        //cocheDAO.listarCoches();
         tvCoches.setItems(listaCoches);
 
         //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
@@ -83,6 +83,16 @@ public class AppController implements Initializable {
 
         Coche coche = new Coche(matricula, marca, modelo, tipo);
         cocheDAO.modificarCoche(coche);
+
+        listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
+        cocheDAO.listarCoches();
+        tvCoches.setItems(listaCoches);
+
+        //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
+        tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
+        tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
+        tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
+        tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
     }
 
     @FXML
@@ -93,6 +103,16 @@ public class AppController implements Initializable {
         }
         Coche coche = new Coche(matricula);
         cocheDAO.eliminarCoche(coche);
+
+        listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
+        cocheDAO.listarCoches();
+        tvCoches.setItems(listaCoches);
+
+        //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
+        tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
+        tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
+        tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
+        tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
     }
 
     @FXML
@@ -107,6 +127,16 @@ public class AppController implements Initializable {
 
         Coche coche = new Coche(matricula, marca, modelo, tipo);
         cocheDAO.guardarCoche(coche);
+
+        listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
+        cocheDAO.listarCoches();
+        tvCoches.setItems(listaCoches);
+
+        //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
+        tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
+        tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
+        tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
+        tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
     }
 
    /* @FXML
