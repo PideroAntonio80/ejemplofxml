@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="585.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -64,13 +64,13 @@
             <Button fx:id="btEliminar" layoutX="309.0" layoutY="227.0" mnemonicParsing="false" onAction="#eliminarCoche" text="Eliminar" />
             <Button fx:id="btModificar" layoutX="220.0" layoutY="227.0" mnemonicParsing="false" onAction="#modificarCoche" text="Modificar" />
             <ComboBox fx:id="cbTipo" layoutX="127.0" layoutY="155.0" prefHeight="27.0" prefWidth="167.0" />
-            <TableView fx:id="tvCoches" layoutX="380.0" layoutY="20.0" prefHeight="339.0" prefWidth="254.0">
+            <TableView fx:id="tvCoches" layoutX="385.0" layoutY="21.0" onMouseClicked="#getDetalleLista" prefHeight="477.0" prefWidth="395.0">
               <columns>
-                <TableColumn fx:id="tcId" prefWidth="25.0" text="Id" />
-                <TableColumn fx:id="tcMatricula" prefWidth="60.0" text="Matrícula" />
-                  <TableColumn fx:id="tcMarca" prefWidth="50.0" text="Marca" />
-                  <TableColumn fx:id="tcModelo" prefWidth="61.0" text="Modelo" />
-                  <TableColumn fx:id="tcTipo" prefWidth="64.0" text="Tipo" />
+                <TableColumn fx:id="tcId" prefWidth="33.0" text="Id" />
+                <TableColumn fx:id="tcMatricula" prefWidth="84.0" text="Matrícula" />
+                  <TableColumn fx:id="tcMarca" prefWidth="87.0" text="Marca" />
+                  <TableColumn fx:id="tcModelo" prefWidth="93.0" text="Modelo" />
+                  <TableColumn fx:id="tcTipo" prefWidth="97.0" text="Tipo" />
               </columns>
             </TableView>
       </children>

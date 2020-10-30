@@ -1,6 +1,9 @@
 package com.sanvalero.ejemplofxml;
 
 import com.sanvalero.ejemplofxml.domain.Coche;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableObjectValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -55,12 +58,37 @@ public class AppController implements Initializable {
         tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
         tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
+        //detalleCocheTabla();
+
     }
 
-    /*@FXML
-    public void desplegable(Event event) {
+    public void getDetalleLista(Event event) {
+
+        tfMatricula.setText(tvCoches.getSelectionModel().selectedItemProperty().getValue().getMatricula());
+        tfMarca.setText(tvCoches.getSelectionModel().selectedItemProperty().getValue().getMarca());
+        tfModelo.setText(tvCoches.getSelectionModel().selectedItemProperty().getValue().getModelo());
+        cbTipo.setValue(String.valueOf(tvCoches.getSelectionModel().selectedItemProperty().getValue().getTipo()));
+
+    }
+
+
+    /*@Override
+    public void changed(ObservableValue observableValue, Object o, Object t1) {
 
     }*/
+
+    /*@FXML
+    public void detalleCocheTabla() {
+        tvCoches.getSelectionModel().selectionModeProperty().addListener(new ChangeListener<SelectionMode>() {
+            @Override
+            public void changed(ObservableValue<? extends SelectionMode> observableValue, SelectionMode selectionMode, SelectionMode t1) {
+                System.out.println("Selección efectuada");
+            }
+        });
+
+    }*/
+
+    /*tfMaXaratText());*/
 
     @FXML
     public void nuevoCoche(Event event) {
@@ -129,7 +157,7 @@ public class AppController implements Initializable {
         cocheDAO.guardarCoche(coche);
 
         listaCoches = FXCollections.observableArrayList(cocheDAO.listarCoches());
-        cocheDAO.listarCoches();
+        //cocheDAO.listarCoches();
         tvCoches.setItems(listaCoches);
 
         //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id")); ???
@@ -138,6 +166,8 @@ public class AppController implements Initializable {
         tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
         tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
     }
+
+
 
    /* @FXML
     public void listarCoches() {
