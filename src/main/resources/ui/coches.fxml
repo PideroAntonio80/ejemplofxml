@@ -59,9 +59,9 @@
             <TextField fx:id="tfMatricula" layoutX="127.0" layoutY="34.0" />
             <TextField fx:id="tfMarca" layoutX="127.0" layoutY="71.0" />
             <TextField fx:id="tfModelo" layoutX="127.0" layoutY="113.0" />
-            <Button fx:id="btNuevo" layoutX="68.0" layoutY="226.0" mnemonicParsing="false" onAction="#nuevoCoche" text="Nuevo" />
-            <Button fx:id="btGuardar" layoutX="138.0" layoutY="226.0" mnemonicParsing="false" onAction="#guardarCoche" text="Guardar" />
-            <Button fx:id="btEliminar" layoutX="309.0" layoutY="227.0" mnemonicParsing="false" onAction="#eliminarCoche" text="Eliminar" />
+            <Button fx:id="btNuevo" layoutX="52.0" layoutY="226.0" mnemonicParsing="false" onAction="#nuevoCoche" prefHeight="25.0" prefWidth="67.0" text="Nuevo" />
+            <Button fx:id="btGuardar" layoutX="138.0" layoutY="226.0" mnemonicParsing="false" onAction="#guardarCoche" prefHeight="25.0" prefWidth="67.0" text="Guardar" />
+            <Button fx:id="btEliminar" layoutX="301.0" layoutY="227.0" mnemonicParsing="false" onAction="#eliminarCoche" prefHeight="25.0" prefWidth="67.0" text="Eliminar" />
             <Button fx:id="btModificar" layoutX="220.0" layoutY="227.0" mnemonicParsing="false" onAction="#modificarCoche" text="Modificar" />
             <ComboBox fx:id="cbTipo" layoutX="127.0" layoutY="155.0" prefHeight="27.0" prefWidth="167.0" />
             <TableView fx:id="tvCoches" layoutX="385.0" layoutY="21.0" onMouseClicked="#getDetalleLista" prefHeight="477.0" prefWidth="395.0">
@@ -73,6 +73,9 @@
                   <TableColumn fx:id="tcTipo" prefWidth="97.0" text="Tipo" />
               </columns>
             </TableView>
+            <Button fx:id="btCancelar" layoutX="134.0" layoutY="268.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="25.0" prefWidth="67.0" text="Cancelar" />
+            <Label fx:id="lAvisos" layoutX="8.0" layoutY="513.0" prefHeight="34.0" prefWidth="372.0" />
+            <Button fx:id="btReset" layoutX="52.0" layoutY="267.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="67.0" text="Reset" />
       </children>
     </AnchorPane>
   </children>

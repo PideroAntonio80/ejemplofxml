@@ -4,3 +4,4 @@ com\sanvalero\ejemplofxml\AppController.class
 com\sanvalero\ejemplofxml\util\R.class
 com\sanvalero\ejemplofxml\App.class
 com\sanvalero\ejemplofxml\util\DetalleLista.class
+com\sanvalero\ejemplofxml\util\AlertUtils.class

@@ -11,24 +11,20 @@ import java.util.List;
 public class CocheDAO {
 
     private Connection conexion;
-    private final String USUARIO = JOptionPane.showInputDialog("Escriba su clave de Usuario");
-    private final String PASSWORD = JOptionPane.showInputDialog("Escriba su contraseña");
+    private final String USUARIO = "pedro1";
+    private final String PASSWORD = "pedro1";
 
-    public void conectar() {
+    public void conectar() throws ClassNotFoundException, SQLException {
 
         int eligeMotor = Integer.parseInt(JOptionPane.showInputDialog("Elige motor de BBDD: (1)MySQL, (2)Postgre"));
 
         if(eligeMotor == 1) {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver"); /* <--- Busco en MVNrepository (en internet),
+
+            Class.forName("com.mysql.cj.jdbc.Driver"); /* <--- Busco en MVNrepository (en internet),
                                                         copio el xml de mysql connector y lo pego en el POM*/
-                conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/taller?serverTimezone=UTC",
-                        USUARIO, PASSWORD);
-            } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-            }
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/taller?serverTimezone=UTC",
+                USUARIO, PASSWORD);
+
 
         } /*else {
             try {
@@ -49,82 +45,50 @@ public class CocheDAO {
 
     }
 
-    public void desconectar() {
-        try {
-            conexion.close();
-            conexion = null;
+    public void desconectar() throws SQLException {
+        conexion.close();
+        conexion = null;
 
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
     }
 
-    public void guardarCoche(Coche coche) {
+    public void guardarCoche(Coche coche) throws SQLException{
         String sql = "INSERT INTO coches (matricula, marca, modelo, tipo) VALUES (?, ?, ?, ?)";
 
-        try {
             PreparedStatement sentencia = conexion.prepareStatement(sql);
             sentencia.setString(1, coche.getMatricula());
             sentencia.setString(2, coche.getMarca());
             sentencia.setString(3, coche.getModelo());
             sentencia.setString(4, coche.getTipo());
             sentencia.executeUpdate();
-            //TODO cargarme todos los alerts del DAO
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Guardar Coche");
-            alert.setContentText("El coche se ha guardado con éxito");
-            alert.show();
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
+
     }
 
-    public void eliminarCoche(Coche coche) {
+    public void eliminarCoche(Coche coche) throws SQLException{
         String sql = "DELETE FROM COCHES WHERE matricula = ?";
 
-        try {
             PreparedStatement sentencia = conexion.prepareStatement(sql);
             sentencia.setString(1, coche.getMatricula());
             sentencia.executeUpdate();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Coche Eliminado");
-            alert.setContentText("El coche se ha sido borrado de la BBDD");
-            alert.show();
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-
     }
 
-    public void modificarCoche(Coche coche) {
+    public void modificarCoche(Coche coche) throws SQLException {
         String sql = "UPDATE coches SET matricula = ?, marca = ?, modelo = ?, tipo = ? WHERE matricula = ?";
 
-        try {
             PreparedStatement sentencia = conexion.prepareStatement(sql);
 
             sentencia.setString(1, coche.getMatricula());
             sentencia.setString(2, coche.getMarca());
             sentencia.setString(3, coche.getModelo());
             sentencia.setString(4, coche.getTipo());
-            sentencia.setString(5, JOptionPane.showInputDialog("Introduzca la matrícula del coche que desea modificar"));
+            sentencia.setString(5, coche.getMatricula());
             sentencia.executeUpdate();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Coche Modificado");
-            alert.setContentText("Su coche ha sido modificado");
-            alert.show();
-
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
     }
 
-    public List<Coche> listarCoches() {
+    public List<Coche> listarCoches() throws SQLException {
         String sql = "SELECT * FROM coches";
 
-        try {
             Statement sentencia = conexion.createStatement();
             ResultSet resultado = sentencia.executeQuery(sql);
 
@@ -132,14 +96,14 @@ public class CocheDAO {
 
             while(resultado.next()) {
                 Coche coche = new Coche(
-                        //resultado.getInt(1),
+                        resultado.getInt(1),
                         resultado.getString(2),
                         resultado.getString(3),
                         resultado.getString(4),
                         resultado.getString(5)
                 );
                 lista.add(coche);
-                /*System.out.print(resultado.getString(2) + " - ");
+                /*System.out.print(resultado.getString(2) + " - ");  <--- Por si quiero comprobar por consola
                 System.out.print(resultado.getString(3) + " - ");
                 System.out.print(resultado.getString(4) + " - ");
                 System.out.println(resultado.getString(5) + " - ");*/
@@ -147,10 +111,15 @@ public class CocheDAO {
 
             return lista;
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+    }
+
+    public boolean existeCoche(String matricula) throws SQLException {
+        String sql = "SELECT * FROM coches WHERE matricula = ?";
+        PreparedStatement sentencia = conexion.prepareStatement(sql);
+        sentencia.setString(1, matricula);
+        ResultSet resultado = sentencia.executeQuery();
+
+        return resultado.next();
     }
 
 }
