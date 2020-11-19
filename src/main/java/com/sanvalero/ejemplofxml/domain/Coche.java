@@ -7,9 +7,18 @@ public class Coche {
     private String marca;
     private String modelo;
     private String tipo;
+    private String matriculaVieja;
 
     public Coche(int id, String matricula, String marca, String modelo, String tipo) {
         this.id = id;
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.tipo = tipo;
+    }
+
+    public Coche(String matriculaVieja, String matricula, String marca, String modelo, String tipo) {
+        this.matriculaVieja = matriculaVieja;
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
@@ -26,6 +35,10 @@ public class Coche {
     public Coche(String matricula) {
 
         this.matricula = matricula;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getMatricula() {
@@ -66,6 +79,14 @@ public class Coche {
     public void setTipo(String tipo) {
 
         this.tipo = tipo;
+    }
+
+    public String getMatriculaVieja() {
+        return matriculaVieja;
+    }
+
+    public void setMatriculaVieja(String matriculaVieja) {
+        this.matriculaVieja = matriculaVieja;
     }
 
     public String toString() {

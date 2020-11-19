@@ -1,54 +1,38 @@
 package com.sanvalero.ejemplofxml;
 
 import com.sanvalero.ejemplofxml.domain.Coche;
+import com.sanvalero.ejemplofxml.util.R;
 import javafx.scene.control.Alert;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class CocheDAO {
 
     private Connection conexion;
-    private final String USUARIO = "pedro1";
-    private final String PASSWORD = "pedro1";
 
-    public void conectar() throws ClassNotFoundException, SQLException {
+    public void conectar() throws ClassNotFoundException, SQLException, IOException {
 
-        int eligeMotor = Integer.parseInt(JOptionPane.showInputDialog("Elige motor de BBDD: (1)MySQL, (2)Postgre"));
+        Properties configuration = new Properties();
+        configuration.load(R.getProperties("database.properties"));
+        String host = configuration.getProperty("host");
+        String port = configuration.getProperty("port");
+        String name = configuration.getProperty("name");
+        String username = configuration.getProperty("username");
+        String password = configuration.getProperty("password");
 
-        if(eligeMotor == 1) {
-
-            Class.forName("com.mysql.cj.jdbc.Driver"); /* <--- Busco en MVNrepository (en internet),
+        Class.forName("com.mysql.cj.jdbc.Driver"); /* <--- Busco en MVNrepository (en internet),
                                                         copio el xml de mysql connector y lo pego en el POM*/
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/taller?serverTimezone=UTC",
-                USUARIO, PASSWORD);
-
-
-        } /*else {
-            try {
-                Class.forName("org.postgresql.Driver").newInstance();
-                conexion = DriverManager.getConnection(
-                        "jdbc:postgresql://localhost:5432/basededatos",
-                        "usuario", "contraseña");
-            } catch (ClassNotFoundException cnfe) {
-                cnfe.prinStackTrace();
-            } catch (SQLException sqle) {
-                sqle.prinStackTrace();
-            } catch (InstantiationException ie) {
-                ie.prinStackTrace();
-            } catch (IllegalAccessException iae) {
-                iae.prinStackTrace();
-            }
-        }*/
-
+        conexion = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
+                username, password);
     }
 
     public void desconectar() throws SQLException {
         conexion.close();
-        conexion = null;
-
     }
 
     public void guardarCoche(Coche coche) throws SQLException{
@@ -81,13 +65,13 @@ public class CocheDAO {
             sentencia.setString(2, coche.getMarca());
             sentencia.setString(3, coche.getModelo());
             sentencia.setString(4, coche.getTipo());
-            sentencia.setString(5, coche.getMatricula());
+            sentencia.setString(5, coche.getMatriculaVieja());
             sentencia.executeUpdate();
 
     }
 
     public List<Coche> listarCoches() throws SQLException {
-        String sql = "SELECT * FROM coches";
+        String sql = "SELECT * FROM coches ORDER BY marca";
 
             Statement sentencia = conexion.createStatement();
             ResultSet resultado = sentencia.executeQuery(sql);

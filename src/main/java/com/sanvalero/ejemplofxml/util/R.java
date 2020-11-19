@@ -10,6 +10,10 @@ public class R {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream("images" + File.separator + name);
     }
 
+    public static InputStream getProperties(String name) {
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration" + File.separator + name);
+    }
+
     public static URL getUI(String name) {
         return Thread.currentThread().getContextClassLoader().getResource("ui" + File.separator + name);
     }

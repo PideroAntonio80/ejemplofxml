@@ -2,20 +2,24 @@ package com.sanvalero.ejemplofxml;
 
 import com.sanvalero.ejemplofxml.domain.Coche;
 import com.sanvalero.ejemplofxml.util.AlertUtils;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableObjectValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
@@ -52,6 +56,8 @@ public class AppController implements Initializable {
             AlertUtils.mostrarError("Error al iniciar la aplicación");
         } catch (SQLException sql) {
             AlertUtils.mostrarError("No se ha podido conectar");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
@@ -138,6 +144,7 @@ public class AppController implements Initializable {
         } catch (SQLException sql) {
             AlertUtils.mostrarError("Error al guardar coche");
         }
+        System.out.println(coche.getId());
 
     }
 
@@ -146,6 +153,7 @@ public class AppController implements Initializable {
         try {
             AlertUtils.mostrarConfirmacion("Modificación");
 
+            String matriculaVieja = tvCoches.getSelectionModel().selectedItemProperty().getValue().getMatricula();
             String matricula = tfMatricula.getText();
             if (matricula.equals("")) {
                 AlertUtils.mostrarError("Debes elegir un coche de la lista para modificar");
@@ -155,7 +163,7 @@ public class AppController implements Initializable {
             String modelo = tfModelo.getText();
             String tipo = cbTipo.getSelectionModel().getSelectedItem();
 
-            Coche coche = new Coche(matricula, marca, modelo, tipo);
+            Coche coche = new Coche(matriculaVieja, matricula, marca, modelo, tipo);
             COCHEDAO.modificarCoche(coche);
             lAvisos.setText("Coche modificado");
 
@@ -224,6 +232,33 @@ public class AppController implements Initializable {
         tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));
         tcTipo.setCellValueFactory(new PropertyValueFactory<Coche, String>("tipo"));
+    }
+
+    @FXML
+    public void importar(ActionEvent Event) {
+
+    }
+
+    @FXML
+    public void exportar(ActionEvent Event) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            File fichero = fileChooser.showSaveDialog(null);
+            FileWriter fileWriter = new FileWriter(fichero);
+
+            CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.DEFAULT.withHeader("Id", "Matrícula", "Marca", "Modelo", "Tipo"));
+
+            List<Coche> coches = COCHEDAO.listarCoches();
+            for (Coche coche : coches) {
+                printer.printRecord(coche.getId(), coche.getMatricula(), coche.getMarca(), coche.getModelo(), coche.getTipo());
+            }
+            printer.close();
+            lAvisos.setText("Datos transferidos a su fichero");
+        } catch (SQLException sql) {
+           AlertUtils.mostrarError("Error al conectar con la base de datos");
+        } catch (IOException ioe) {
+            AlertUtils.mostrarError("Error al exportar los datos");
+        }
     }
 
     private void limpiaCajas() {
