@@ -227,7 +227,7 @@ public class AppController implements Initializable {
         listaCoches = FXCollections.observableArrayList(COCHEDAO.listarCoches());
         tvCoches.setItems(listaCoches);
 
-        //tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id"));
+        tcId.setCellValueFactory(new PropertyValueFactory<Coche, Integer>("id"));
         tcMatricula.setCellValueFactory(new PropertyValueFactory<Coche, String>("matricula"));
         tcMarca.setCellValueFactory(new PropertyValueFactory<Coche, String>("marca"));
         tcModelo.setCellValueFactory(new PropertyValueFactory<Coche, String>("modelo"));

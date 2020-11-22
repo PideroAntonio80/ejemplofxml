@@ -71,7 +71,7 @@ public class CocheDAO {
     }
 
     public List<Coche> listarCoches() throws SQLException {
-        String sql = "SELECT * FROM coches ORDER BY marca";
+        String sql = "SELECT * FROM coches ORDER BY id";
 
             Statement sentencia = conexion.createStatement();
             ResultSet resultado = sentencia.executeQuery(sql);
